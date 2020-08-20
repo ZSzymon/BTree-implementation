@@ -414,52 +414,10 @@ typename BTNode<K,V,Comparator>::base_node *BTNode<K,V,Comparator>::getBiggestIn
 
 template <class K,class V,class Comparator = std::less_equal<K>>
 class BTree{
-    class _Iterator{
-        _Iterator end,notEnd;
-        bool wasEnd= false;
-        BTree *btree;
-        BaseNode<K,V,Comparator> *baseNode = nullptr;
-        void setEnd(){
-            end.baseNode = btree->getMax();
-        }
-    public:
-        _Iterator& operator++(){
 
-            if(baseNode){
-                //baseNode = getSuccesor(baseNode);
-
-            }
-            if(baseNode == end)
-                wasEnd = true;
-            return *this;
-       }
-        _Iterator &beginIt(){
-            //retrun begin the smallest element.
-            _Iterator it;
-            it.btree->baseNode = it.btree->getMin();
-            return *it;
-
-        }
-        _Iterator &endIt(){
-            return wasEnd ? end : notEnd;
-        }
-        _Iterator(BTree *treeRoot){
-            setTree(treeRoot);
-            end.setTree(treeRoot);
-        }
-        void setTree(BTree *tree){
-            btree = tree;
-        }
-    };
 
 public:
-    class Iterator{
-       //builderForIterator.
-        _Iterator *it;
-        Iterator(){
-            it = new _Iterator(this);
-        }
-    };
+
     typedef BTNode<K,V,Comparator> Node;
     typedef BaseNode<K,V,Comparator> base_node;
     Node *root;
@@ -533,27 +491,27 @@ public:
         }
     }
 
-    base_node *getSuccessorKey(K key){
-        //przypadek graniczny tutaj trzeba obsluzyc, gdy succesor jest w innym nodzie. 14,14
-        Node *node = root->getNodeWithKey(key);
-        int id = node->getIndexOfKey(key).first;
-        if(!node->isLeaf){
-            return node->getSmallestInSubTree(id+1);
-        } else if(node->isLeaf && id < (node->keysSize-1) )//kS 19-1 == 18
-            return node->keys[id+1];
-        else
-            return nullptr;
-    }
-    base_node *getPredicatorKey(K key){
-        Node *node = root->getNodeWithKey(key);
-        int id = node->getIndexOfKey(key).first;
-        if(!node->isLeaf){
-            return node->getBiggestInSubTree(id-1);
-        } else if(node->isLeaf && id>0 && id<=node->keysSize )//kS 19-1 == 18
-            return node->keys[id-1];
-        else
-            return nullptr;
-    }
+//    base_node *getSuccessorKey(K key){
+//        //przypadek graniczny tutaj trzeba obsluzyc, gdy succesor jest w innym nodzie. 14,14
+//        Node *node = root->getNodeWithKey(key);
+//        int id = node->getIndexOfKey(key).first;
+//        if(!node->isLeaf){
+//            return node->getSmallestInSubTree(id+1);
+//        } else if(node->isLeaf && id < (node->keysSize-1) )//kS 19-1 == 18
+//            return node->keys[id+1];
+//        else
+//            return nullptr;
+//    }
+//    base_node *getPredicatorKey(K key){
+//        Node *node = root->getNodeWithKey(key);
+//        int id = node->getIndexOfKey(key).first;
+//        if(!node->isLeaf){
+//            return node->getBiggestInSubTree(id-1);
+//        } else if(node->isLeaf && id>0 && id<=node->keysSize )//kS 19-1 == 18
+//            return node->keys[id-1];
+//        else
+//            return nullptr;
+//    }
 };
 
 

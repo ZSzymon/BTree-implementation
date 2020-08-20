@@ -1,16 +1,15 @@
 #include <iostream>
 #include "Btree.h"
 #include "map"
-#include "set"
-
 #include "assert.h"
+
 class Test{
    BTree<int,int> tree;
    std::map<int,int> toInsert,toDelete,notDeleted;
-   std::set<pair<int,int>> set;
+
 
    void prepareNumbersToInsert(){
-       int howMany = 100000000;
+       int howMany = 10000000;
        int key,val;
        for(int i=0;i<howMany; i++){
            key = rand()%INT_MAX;
